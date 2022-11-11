@@ -23,7 +23,7 @@ import android.graphics.BitmapFactory;
 public class MakerDB extends SQLiteOpenHelper {
 
 	Context ctx;
-	
+
 	static final String DB_NAME = "myDB";
 	static Integer DB_VERSION = 1;
 
@@ -56,12 +56,48 @@ public class MakerDB extends SQLiteOpenHelper {
 		db.execSQL(deleteTableSQL);
 		onCreate(db);
 	}
-	
+
 	public Cursor getAllCountries(SQLiteDatabase db) {
-		String[] columns = new String[] {COUNTRY, ABBR, PIC, ID};
+		String[] columns = new String[] { COUNTRY, ABBR, PIC, ID };
 		Cursor cursor = db.query(TABLE_NAME, columns, null, null, null, null, null);
 		if (cursor != null) {
 			cursor.moveToFirst();
+		}
+		return cursor;
+	}
+
+	public Cursor getCountriesByName(String name, SQLiteDatabase db) {
+		String[] columns = new String[] { COUNTRY, ABBR, PIC, ID };
+		Cursor cursor;
+		if (name == null || name.equals("")) {
+			cursor = db.query(TABLE_NAME, columns, null, null, null, null, null);
+			if (cursor != null) {
+				cursor.moveToFirst();
+			}
+		} else {
+			String like = "%" + name + "%";
+			cursor = db.query(TABLE_NAME, columns, "country LIKE ?", new String[] { like }, null, null, null);
+			if (cursor != null) {
+				cursor.moveToFirst();
+			}
+		}
+		return cursor;
+	}
+
+	public Cursor getCountriesByCode(String name, SQLiteDatabase db) {
+		String[] columns = new String[] { COUNTRY, ABBR, PIC, ID };
+		Cursor cursor;
+		if (name == null || name.equals("")) {
+			cursor = db.query(TABLE_NAME, columns, null, null, null, null, null);
+			if (cursor != null) {
+				cursor.moveToFirst();
+			}
+		} else {
+			String like = "%" + name + "%";
+			cursor = db.query(TABLE_NAME, columns, "abbr LIKE ?", new String[] { like }, null, null, null);
+			if (cursor != null) {
+				cursor.moveToFirst();
+			}
 		}
 		return cursor;
 	}

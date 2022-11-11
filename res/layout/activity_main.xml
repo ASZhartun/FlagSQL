@@ -5,11 +5,12 @@
     tools:context="${relativePackage}.${activityClass}" >
 
     <EditText
-        android:id="@+id/search"
+        android:id="@+id/input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
         android:ems="10"
         android:gravity="center_vertical|center_horizontal"
         android:hint="Input country or code..." />
@@ -18,12 +19,14 @@
         android:id="@+id/type_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/search"
+        android:layout_below="@id/input"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal" >
 
         <RadioButton
-            android:id="@+id/code"
+            android:id="@+id/by_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -31,36 +34,31 @@
             android:text="by code" />
 
         <RadioButton
-            android:id="@+id/country_name"
+            android:id="@+id/by_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="by name" />
 
-        <RadioButton
-            android:id="@+id/random"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="roll" />
-
     </RadioGroup>
 
     <Button
-        android:id="@+id/search_button"
+        android:id="@+id/search_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/type_search"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:text="Search" />
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/search_button" />
 
     <ListView
         android:id="@+id/countries_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/search_button" >
+        android:layout_below="@id/search_action" >
 
     </ListView>
 

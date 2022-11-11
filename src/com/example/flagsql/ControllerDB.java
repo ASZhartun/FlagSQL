@@ -27,19 +27,45 @@ public class ControllerDB {
 		ArrayList<Country> countries = new ArrayList<Country>();
 		SQLiteDatabase db = makerDB.getWritableDatabase();
 		Cursor countryCursor = makerDB.getAllCountries(db);
-
-		if (countryCursor != null) {
-			countryCursor.moveToFirst();
-			do {
-				Country temp = new Country();
-				temp.setName(countryCursor.getString(0));
-				temp.setCode(countryCursor.getString(1));
-				temp.setFlag(countryCursor.getBlob(2));
-				countries.add(temp);
-			} while (countryCursor.moveToNext());
-		}
+		formCountryArray(countryCursor, countries);
 		makerDB.close();
 		return countries;
 	}
 
+	public ArrayList<Country> getCountriesByName(String name) {
+		ArrayList<Country> countries = new ArrayList<Country>();
+		SQLiteDatabase db = makerDB.getWritableDatabase();
+		Cursor countryCursor = makerDB.getCountriesByName(name, db);
+		formCountryArray(countryCursor, countries);
+		makerDB.close();
+		return countries;
+	}
+
+	public ArrayList<Country> getCountriesByCode(String name) {
+		if (name.length() > 2) {
+			name = name.substring(0, 2);
+		}
+		ArrayList<Country> countries = new ArrayList<Country>();
+		SQLiteDatabase db = makerDB.getWritableDatabase();
+		Cursor countryCursor = makerDB.getCountriesByCode(name, db);
+		formCountryArray(countryCursor, countries);
+		makerDB.close();
+		return countries;
+	}
+
+	private void formCountryArray(Cursor countryCursor, ArrayList<Country> countries) {
+		if (countryCursor != null) {
+			countryCursor.moveToFirst();
+			if (countryCursor.getCount() > 0) {
+				do {
+					Country temp = new Country();
+					temp.setName(countryCursor.getString(0));
+					temp.setCode(countryCursor.getString(1));
+					temp.setFlag(countryCursor.getBlob(2));
+					countries.add(temp);
+				} while (countryCursor.moveToNext());
+			}
+
+		}
+	}
 }
